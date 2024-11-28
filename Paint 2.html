@@ -1,0 +1,45 @@
+<title>Paint?</title>
+<center><input/>
+<canvas width = "1322" height = "600">
+
+</canvas>
+<script>
+var canvas = document.querySelector("canvas")
+var paint = canvas.getContext("2d")
+var input = document.querySelector("input")
+var button = document.querySelector("button")
+var ligado = false
+var raio = 6
+
+paint.fillStroke = "Black"
+paint.strokeRect(0,0,1322,600)
+
+function drawPincel(local){
+  if(ligado == true)
+    var x = local.pageX - canvas.offsetLeft
+    var y = local.pageY - canvas.offsetTop
+	
+	if(local.shiftKey && raio < 40){
+      raio = raio + 2
+    }
+    if(local.ctrlKey && raio > 2){
+      raio = raio - 2
+    }
+  
+    paint.fillStyle = input.value
+    paint.beginPath()
+    paint.arc(x,y,raio,0, 2 * 3.14)
+    paint.fill()
+}
+
+function ligaPincel(){
+  ligado = true
+}
+function desligaPincel(){
+  ligado = false
+}
+
+canvas.onmousemove = drawPincel
+canvas.onmousedown = ligaPincel
+canvas.onmouseup = desligaPincel
+</script>
